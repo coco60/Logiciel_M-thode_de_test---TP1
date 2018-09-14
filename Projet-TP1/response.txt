@@ -1,0 +1,3 @@
+Question 1
+  When you want to prevent a specific method from being called
+  directly (possibly because it triggers undesired behavior, such as a XMLHttpRequest or similar).

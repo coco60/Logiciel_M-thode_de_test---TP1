@@ -1,0 +1,57 @@
+{
+    "userEmail": "user@acme.com",
+    "guid": "1c820789a50747df8746aa5d71922a3f",
+    "uploadUrl": "upload_url",
+    "recipients": [{
+      "id": "59adbccb-87cc-4224-bfd7-314dae796e48",
+      "firstName": "James",
+      "lastName": "Doe",
+      "email": "john.doe@email.com",
+      "options": {
+        "locked": false,
+        "bouncedEmail": false,
+        "verified": false,
+        "contactMethods": [
+          {
+            "id": 1,
+            "destination": "+55555555555",
+            "destinationType": "office_phone",
+            "verified": false,
+            "createdAt": "2018-09-01T16:26:07-04:00",
+            "updatedAt": "2018-09-01T16:26:07-04:00"
+          },
+          {
+            "id": 2,
+            "destination": "+1111111111",
+            "destinationType": "cell_phone",
+            "verified": true,
+            "createdAt": "2018-09-01T16:26:07-04:00",
+            "updatedAt": "2018-09-01T16:26:07-04:00"
+          }
+        ]
+      }
+    }],
+    "attachments": ["/tmp/test_TP1_LOG3430.txt","/tmp/test2_TP1_LOG3430.txt"],
+    "message": "lorem ipsum...",
+    "subject": "Donec rutrum congue leo eget malesuada.",
+    "notificationLanguage": "en",
+    "securityOptions": {
+      "allowRememberMe": true,
+      "allowSms": true,
+      "allowVoice": true,
+      "allowEmail": true,
+      "expirationValue": 5,
+      "expirationUnit": "days",
+      "retentionPeriodType": "do_not_discard",
+      "retentionPeriodValue": null,
+      "retentionPeriodUnit": "hours",
+      "allowManualClose": true
+    },
+    "userId": 1,
+    "status": "in_progress",
+    "previewUrl": "http://sharedbox.com/sharedboxes/dhjewg67ewtfg476/preview",
+    "createdAt": "2018-05-24T14:45:35.062Z",
+    "updatedAt": "2018-05-24T14:45:35.589Z",
+    "expiration": "2018-05-31T14:45:35.038Z",
+    "closedAt": null
+  }
