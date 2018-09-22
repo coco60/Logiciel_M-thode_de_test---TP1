@@ -1,8 +1,5 @@
 import SharedBox from '../src/sharedbox.js';
-// import _map from 'lodash/map';
-// import _partial from 'lodash/partial';
 let assert = require('chai').assert;
-// let expect = require('chai').expect;
 
 export default describe('SharedBox', () => {
   let sharedbox;
@@ -48,7 +45,5 @@ export default describe('SharedBox', () => {
       assert.equal(jsonAnswer.sharedbox.subject,jsonObject.subject,'wrong');
       assert.equal(jsonAnswer.sharedbox.message,jsonObject.message,'wrong');
     });
-    // demander à la prof si il faut faire des tests supplémentaires pas forcément
-    // relevant vu que ça depend du json et de ses attributs
   });
 });

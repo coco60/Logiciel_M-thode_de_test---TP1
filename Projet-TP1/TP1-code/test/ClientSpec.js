@@ -1,4 +1,3 @@
-// import JsonClient from '../src/modules/JsonClient.js';
 import SharedBox from '../src/sharedbox.js';
 import Client from '../src/modules/Client.js';
 import { SharedBoxException } from '../src/modules/SharedBoxException.js';

@@ -1,8 +1,5 @@
 import SharedBox from '../src/sharedbox.js';
-// import _map from 'lodash/map';
-// import _partial from 'lodash/partial';
 let assert = require('chai').assert;
-// let expect = require('chai').expect;
 
 export default describe('Recipient', () => {
   let recipient;
@@ -37,7 +34,6 @@ export default describe('Recipient', () => {
     });
   });
   describe('.method', () => {
-    //test méthode toJson
     it('toJson  test', () => {
       var jsonAnswer = JSON.parse(recipient.toJson());
       assert.equal(jsonAnswer.recipient.email,jsonObject.email,'wrong');
