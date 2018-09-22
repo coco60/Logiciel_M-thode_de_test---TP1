@@ -1,6 +1,7 @@
 // import JsonClient from '../src/modules/JsonClient.js';
 import SharedBox from '../src/sharedbox.js';
 import Client from '../src/modules/Client.js';
+import { SharedBoxException } from '../src/modules/SharedBoxException.js';
 import * as Utils from '../src/Utils/platform.js';
 let chai = require('chai');
 let sinon = require('sinon');
@@ -26,7 +27,8 @@ export default describe('Client', () => {
     stub.restore();
   });
   describe('.method', () => {
-    it('initializeSharedBox Client test', () => {
+
+    it('initializeSharedBox test', () => {
 
       var jsonObject = require('../../JSON/Sharedbox.json');
       var jsonClientResponse = {
@@ -46,7 +48,24 @@ export default describe('Client', () => {
       });
     });
 
-    it('submitSharedBox Client test', () => {
+    it('initializeSharedBox exception test', () => {
+
+      var jsonObject = require('../../JSON/Sharedbox.json');
+
+      stub = sinon.stub(client.jsonClient,'initializeSharedBox');
+      stub.rejects(new SharedBoxException( 400, 'Bad Request', 'ZUT'));
+
+      return client.initializeSharedBox(jsonObject)
+        .catch(error => {
+          expect(client.jsonClient.initializeSharedBox).to.have.been.calledWith(jsonObject.userEmail);
+          expect(error.code).to.be.equal(400);
+          expect(error.message).to.be.equal('Bad Request');
+          expect(error.responseContent).to.be.equal('ZUT');
+          expect(error).to.be.an.instanceof(SharedBoxException);
+        });
+    });
+
+    it('submitSharedBox test', () => {
 
       var jsonObject = require('../../JSON/Sharedbox.json');
       var jsonClientResponse = { 'guid': '1c820789a50747df8746aa5d71922a3f',
@@ -78,7 +97,26 @@ export default describe('Client', () => {
       });
     });
 
-    it('uploadAttachment Client test', () => {
+    it('submitSharedBox exception test', () => {
+
+      var jsonObject = require('../../JSON/Sharedbox.json');
+
+      var sharedBox = new SharedBox.Helpers.Sharedbox(jsonObject);
+
+      stub = sinon.stub(client.jsonClient,'submitSharedBox');
+      stub.rejects(new SharedBoxException( 400, 'Bad Request', 'ZUT'));
+
+      return client.submitSharedBox(sharedBox)
+        .catch(error => {
+          expect(client.jsonClient.submitSharedBox).to.have.been.calledWith(sharedBox.toJson());
+          expect(error.code).to.be.equal(400);
+          expect(error.message).to.be.equal('Bad Request');
+          expect(error.responseContent).to.be.equal('ZUT');
+          expect(error).to.be.an.instanceof(SharedBoxException);
+        });
+    });
+
+    it('uploadAttachment test', () => {
 
       var jsonObject = require('../../JSON/Sharedbox.json');
       var jsonClientResponse = {
@@ -107,7 +145,7 @@ export default describe('Client', () => {
       });
     });
 
-    it('addRecipient Client test', () => {
+    it('addRecipient test', () => {
 
       var jsonObjectSharedBox = require('../../JSON/Sharedbox.json');
       var jsonObjectRecipient = require('../../JSON/Recipient.json');
@@ -125,7 +163,36 @@ export default describe('Client', () => {
       });
     });
 
-    it('closeSharedbox Client test', () => {
+    it('addRecipient guid exception test', () => {
+
+      var jsonObjectSharedBox = require('../../JSON/Sharedbox.json');
+      var jsonObjectRecipient = require('../../JSON/Recipient.json');
+
+      var sharedBox = new SharedBox.Helpers.Sharedbox(jsonObjectSharedBox);
+      delete sharedBox.guid;
+      var recipient = new SharedBox.Helpers.Recipient(jsonObjectRecipient);
+
+      expect( function() {
+        return client.addRecipient(sharedBox,recipient);
+      }).to.throw(SharedBoxException);
+
+    });
+
+    it('addRecipient email exception test', () => {
+
+      var jsonObjectSharedBox = require('../../JSON/Sharedbox.json');
+      var jsonObjectRecipient = require('../../JSON/RecipientNoMail.json');
+
+      var sharedBox = new SharedBox.Helpers.Sharedbox(jsonObjectSharedBox);
+      var recipient = new SharedBox.Helpers.Recipient(jsonObjectRecipient);
+
+      expect( function() {
+        return client.addRecipient(sharedBox,recipient);
+      }).to.throw(SharedBoxException);
+
+    });
+
+    it('closeSharedbox test', () => {
 
       var jsonObjectSharedBox = require('../../JSON/Sharedbox.json');
       var sharedBox = new SharedBox.Helpers.Sharedbox(jsonObjectSharedBox);
@@ -143,5 +210,19 @@ export default describe('Client', () => {
         expect(result).to.deep.equal(jsonResponse);
       });
     });
+
+    it('closeSharedbox guid exception test', () => {
+
+      var jsonObjectSharedBox = require('../../JSON/Sharedbox.json');
+
+      var sharedBox = new SharedBox.Helpers.Sharedbox(jsonObjectSharedBox);
+      delete sharedBox.guid;
+
+      expect( function() {
+        return client.closeSharedbox(sharedBox);
+      }).to.throw(SharedBoxException);
+
+    });
+
   });
 });
